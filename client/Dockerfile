@@ -1,8 +1,7 @@
 # https://docs.docker.com/engine/reference/builder/
 
-# Use an official Python runtime as a parent image
-# See https://hub.docker.com/ and search for python:2.7-slim
-FROM python:3-slim
+# get nodejs
+FROM node:8.17.0-alpine3.9
 
 # Set the working directory to /app
 # The WORKDIR instruction sets the working directory (inside the container) 
@@ -13,9 +12,8 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 ADD . /app
 
-# Install any needed packages specified in requirements.txt
-# RUN during image build
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+# npm install packages
+RUN npm install
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
@@ -25,4 +23,4 @@ ENV NAME World
 
 # Run python app.py when the container launches
 # This happens if no command is specified
-CMD ["python", "app.py"]
+CMD ["node", "server.js"]

@@ -1,0 +1,54 @@
+version: "3"
+services:
+
+  graph_client:
+    # the graph maker application
+    image: luid101/graphclient:latest
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "4000:80"
+    networks:
+      - webnet
+
+  link_extractor:
+    # the link extractor application
+    image: luid101/linkextractor:latest
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "4001:80"
+    networks:
+      - webnet
+
+  graph_maker:
+    # the graph maker application
+    image: luid101/graphmaker:latest
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "4002:80"
+    networks:
+      - webnet
+
+networks:
+  webnet:
+
